@@ -15,21 +15,22 @@ main = do
 
     file  <- readFile (head args)
     g1    <- newStdGen
-    --g2    <- newStdGen
-    --g3    <- newStdGen
+    g2    <- newStdGen
+    g3    <- newStdGen
 
-    let formula  = parseFile file
-        size     = ( \(x, _, _) -> x ) (head formula)
+    let formula' = parseFile file
+        size     = ( \(x, _, _) -> x ) (head formula')
+        formula  = tail formula'
         s0       = randomVars size g1
-        --(x, y)   = randomR (0, 1 :: Int) g1
-        changes  = randomRs (0, 1      :: Double ) g1
-        pos      = randomRs (0, size-1 :: Int ) g1
-        maxIters = 10000
+        --s0       = [True,True,False,False,True,False,True,True,False,True,True,False,False,False,False,False,True,True,True,False]
+        changes  = randomRs (0, 1      :: Double ) g2
+        pos      = randomRs (0, size-1 :: Int    ) g2
+        maxIters = 100000
 
+    --print formula
     print $ s0
     print $ loop s0 formula pos changes maxIters maxIters
-    print $ length $ s0
-    print $ length $ loop s0 formula pos changes maxIters maxIters
-    --print $ applyClausule (s0 ++ s0) (tail formula)
+    print $ objFunc    s0 formula
+    print $ objFunc ( loop s0 formula pos changes maxIters maxIters ) formula
 
     return ()
