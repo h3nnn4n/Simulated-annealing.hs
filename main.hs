@@ -25,7 +25,7 @@ main = do
         --s0       = [True,True,False,False,True,False,True,True,False,True,True,False,False,False,False,False,True,True,True,False]
         changes  = randomRs (0, 1      :: Double ) g2
         pos      = randomRs (0, size-1 :: Int    ) g2
-        maxIters = 100000
+        maxIters = 10000
 
     --print formula
     print $ s0
